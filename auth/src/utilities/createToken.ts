@@ -3,10 +3,10 @@ import { Session } from "../entity/Session";
 import { sign } from "jsonwebtoken";
 
 export const createAccessToken = (user: User) => {
-  const token = sign({ userId: user.id }, process.env.JWT_SECRET as string, {
+  const token = sign({ userId: user.id }, process.env.JWT_SECRET!, {
     expiresIn: "5m",
   });
-  return `${process.env.SERVER_ID} ${token}`;
+  return `${process.env.SERVER_ID!} ${token}`;
 };
 
 export const createRefreshToken = async (user: User) => {
