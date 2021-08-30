@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export interface UserContext {
+export interface ExpressContext {
   req: Request;
   res: Response;
 }

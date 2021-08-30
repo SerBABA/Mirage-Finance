@@ -4,9 +4,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
 import { createConnection } from "typeorm";
-import { config } from "dotenv";
-
-config();
+import "dotenv/config";
 
 (async () => {
   const app = express();
