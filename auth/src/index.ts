@@ -4,12 +4,20 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
 import { createConnection } from "typeorm";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 
 (async () => {
   const app = express();
 
   app.get("/", (_req, res) => res.send("Hello world"));
+
+  const corsOptions = {
+    origin: ["https://studio.apollographql.com"],
+    credentials: true,
+  };
+
+  app.use(cookieParser());
 
   await createConnection();
 
@@ -23,7 +31,7 @@ import "dotenv/config";
   });
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   app.listen(5000, () => {
     console.log(`Server started on port ${5000}`);
