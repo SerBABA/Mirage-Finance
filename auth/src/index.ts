@@ -6,7 +6,7 @@ import { UserResolver } from "./resolvers/UserResolver";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
-import { handleRefreshTokens } from "controller";
+import { handleRefreshTokens } from "./controller";
 
 (async () => {
   const app = express();
