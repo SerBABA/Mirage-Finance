@@ -12,7 +12,7 @@ export const handleRefreshTokens = async (req: Request, res: Response) => {
     console.error("No refresh token provided.");
     return res.status(401).send({ ok: false });
   }
-  console.log(req.cookies);
+
   if (!access_cookie) {
     console.error("No access cookie provided.");
     return res.status(401).send({ ok: false });

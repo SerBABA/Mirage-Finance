@@ -13,6 +13,7 @@ import {
   Register,
   RegisterWrap,
 } from "./login.elements";
+import GraphqlExample from "components/graphqlexample";
 import { MyField } from "components/Forms";
 import { useState } from "react";
 
@@ -22,6 +23,7 @@ export default function Login() {
       <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
+        <GraphqlExample />
         <LoginWrapper>
           <LoginForm />
         </LoginWrapper>

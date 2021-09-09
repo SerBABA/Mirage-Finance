@@ -7,6 +7,7 @@ import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 import { handleRefreshTokens } from "./controller";
+import { corsConfig } from "./config/CorsConfig";
 
 (async () => {
   const app = express();
@@ -15,11 +16,6 @@ import { handleRefreshTokens } from "./controller";
   app.get("/", (_req, res) => res.send("Hello world"));
 
   app.post("/refresh_tokens", handleRefreshTokens);
-
-  const corsOptions = {
-    origin: ["https://studio.apollographql.com"],
-    credentials: true,
-  };
 
   await createConnection();
 
@@ -33,7 +29,7 @@ import { handleRefreshTokens } from "./controller";
   });
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app, cors: corsOptions });
+  apolloServer.applyMiddleware({ app, cors: corsConfig() });
 
   app.listen(5000, () => {
     console.log(`Server started on port ${5000}`);
