@@ -5,6 +5,7 @@ import { randomBytes } from "crypto";
 import { ExpressContext } from "types/ExpressContext";
 import { createAccessToken, createRefreshToken } from "./../utilities/createToken";
 import { isAuth } from "../middleware/isAuth";
+import { Session } from "./../entity/Session";
 
 // Defining a response type for the resolver login
 // @ObjectType()
@@ -20,7 +21,7 @@ import { isAuth } from "../middleware/isAuth";
 export class UserResolver {
   @Query(() => String)
   hello() {
-    return "hi!";
+    return "hello world!";
   }
 
   // User[] is equivalent to [User]
@@ -33,6 +34,31 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   bye(@Ctx() { payload }: ExpressContext) {
     return `Bye user with id ${payload!.userId}`;
+  }
+
+  /**
+   *
+   * @param context Contains the payload of the access token
+   * @returns
+   */
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async Logout(@Ctx() { payload }: ExpressContext): Promise<boolean> {
+    const user: User | undefined = await User.findOne({ where: { id: payload!.userId } });
+
+    if (!user) {
+      console.error(`User id ${payload!.userId} provided to logout is invalid`);
+      throw new Error("Failed to logout");
+    }
+
+    const result = await Session.delete({ user: user });
+
+    if (result.affected != null && result.affected != undefined && result.affected <= 0) {
+      console.error(`User ${user.id} was already logged out.`);
+      throw new Error("User is already logged out.");
+    }
+
+    return true;
   }
 
   /**

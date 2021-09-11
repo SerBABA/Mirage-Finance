@@ -20,6 +20,5 @@ export const isAuth: MiddlewareFn<ExpressContext> = ({ context }, next) => {
     throw new Error("Not authenticated.");
   }
 
-  // console.log(cookie);
   return next();
 };
