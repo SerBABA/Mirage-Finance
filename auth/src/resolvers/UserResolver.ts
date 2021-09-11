@@ -37,6 +37,8 @@ export class UserResolver {
   }
 
   /**
+   * Logs the user out of there session. This may take some time for the access token
+   * to also expire. But they cannot refresh the token.
    *
    * @param context Contains the payload of the access token
    * @returns
