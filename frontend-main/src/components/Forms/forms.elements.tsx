@@ -28,3 +28,7 @@ export const Input = styled.input<InputProps>`
     border-bottom: 1px solid ${(props) => (props.error ? "red" : "#141b1f60")};
   }
 `;
+
+export const FormError = styled.div`
+  color: red;
+`;

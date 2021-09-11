@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import DataTable from "./DataTable";
 import DistrbutionChart from "components/DistributionChart";
 import LandingPage from "views/landing";
-import Login from "views/login/index";
-import Register from "views/register/index";
+import { Login } from "views/login/index";
+import { Register } from "views/register/index";
 
 export default function MainRouter() {
   return (

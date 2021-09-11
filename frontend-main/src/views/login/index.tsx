@@ -13,28 +13,31 @@ import {
   Register,
   RegisterWrap,
 } from "./login.elements";
-import GraphqlExample from "components/graphqlexample";
+import { FormError } from "components/Forms/forms.elements";
 import { MyField } from "components/Forms";
 import { useState } from "react";
+import { useLoginMutation } from "generated/graphql";
+import { RouteComponentProps } from "react-router";
 
-export default function Login() {
+export const Login: React.FC<RouteComponentProps> = (props) => {
   return (
     <>
       <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
-        <GraphqlExample />
         <LoginWrapper>
-          <LoginForm />
+          <LoginForm {...props} />
         </LoginWrapper>
       </PageWrapper>
       <Bar />
     </>
   );
-}
+};
 
-const LoginForm = () => {
+const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFromError] = useState("");
+  const [login] = useLoginMutation();
 
   return (
     <Formik
@@ -47,9 +50,22 @@ const LoginForm = () => {
 
         return errors;
       }}
-      onSubmit={(data, { setSubmitting }) => {
+      onSubmit={async (data, { setSubmitting }) => {
         setSubmitting(true);
-        console.log("submit: ", data);
+
+        await login({
+          variables: {
+            username: data.username,
+            password: data.password,
+          },
+        })
+          .then(() => {
+            history.push("/dashboard");
+          })
+          .catch((err) => {
+            setFromError(err.message);
+          });
+
         setSubmitting(false);
       }}
     >
@@ -77,6 +93,8 @@ const LoginForm = () => {
                 </ShowPassword>
               </PasswordWrap>
             </InputWrap>
+
+            <FormError>{formError}</FormError>
 
             <Submit type="submit" disabled={isSubmitting}>
               LOGIN

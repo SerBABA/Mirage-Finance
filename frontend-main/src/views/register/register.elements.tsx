@@ -118,7 +118,7 @@ export const RegisterWrap = styled.div`
   margin: 1.5em 0 auto;
 `;
 
-export const Register = styled(Link)`
+export const RegisterLink = styled(Link)`
   text-decoration: none;
   color: #141b1f;
   border-bottom: 1px transparent solid;
