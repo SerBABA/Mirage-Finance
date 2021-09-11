@@ -45,7 +45,7 @@ export class UserResolver {
    */
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
-  async Logout(@Ctx() { payload }: ExpressContext): Promise<boolean> {
+  async Logout(@Ctx() { payload, res }: ExpressContext): Promise<boolean> {
     const user: User | undefined = await User.findOne({ where: { id: payload!.userId } });
 
     if (!user) {
@@ -59,6 +59,19 @@ export class UserResolver {
       console.error(`User ${user.id} was already logged out.`);
       throw new Error("User is already logged out.");
     }
+
+    res.cookie(process.env.REFRESH_NAME!, "none", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 0,
+    });
+
+    res.cookie(process.env.ACCESS_NAME!, "none", {
+      sameSite: "none",
+      secure: true,
+      maxAge: 0,
+    });
 
     return true;
   }
