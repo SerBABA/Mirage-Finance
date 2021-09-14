@@ -65,17 +65,16 @@ const Description = () => {
         </Desc.DescriptionImageWrapper>
         <Desc.DescriptionText>
           <div>
-            <El.H3>Our service</El.H3>
-            With our service you can always feel sad about your money spending! We include the
-            following in our service:
+            <El.H3>Our Service</El.H3>
+            With our service you can always dobut if you have enough money in your bank account:
             <ul>
-              <li>Projections.</li>
-              <li>Sorting payments into categories.</li>
+              <li>Projections for spending.</li>
+              <li>Payment sorting by categories.</li>
               <li>Easy uploading of ANZ bank statements.</li>
-              <li>And more features to make sad!</li>
+              <li>And more features to come!</li>
             </ul>
           </div>
-          <Desc.DescLink to="/">Try it out</Desc.DescLink>
+          <Desc.DescLink to="/login">Try it out</Desc.DescLink>
         </Desc.DescriptionText>
       </Desc.Wrapper>
     </Desc.ContentWrapper>
@@ -89,22 +88,16 @@ const Testimonials = () => {
   return (
     <Tes.ContentWrapper>
       <Tes.TestimonialsWrapper>
-        <Testimonial src={NickSadProfile} title="Nick Sad" job="Poor Student" date="2020">
-          "I was quite excited to use the app! But I had hoped that the app would be wrong and make
-          me happy. But I was sorely mistaking... I am now sad."
+        <Testimonial src={NickSadProfile} title="Fake Nick" job="Student" date="2020">
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
         </Testimonial>
-        <Testimonial src={DefaultUserProfile} title="Anonymous User" job="Just Poor" date="2021">
-          "F*CK I'm broke!"
+        <Testimonial src={DefaultUserProfile} title="Anonymous User" job="Student" date="2021">
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         </Testimonial>
-        <Testimonial
-          src={JessicaSadProfile}
-          title="Jessie Depressy"
-          job="Poor Postgrad"
-          date="2019"
-        >
-          "Working full time and working a my thesis is quite hard! But I hoped I could at least
-          breakdown my finances, and oh boy did that make me dobut everything in my life about
-          money!"
+        <Testimonial src={JessicaSadProfile} title="Fake Jessie" job="Postgrad Student" date="2019">
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam"
         </Testimonial>
       </Tes.TestimonialsWrapper>
     </Tes.ContentWrapper>
