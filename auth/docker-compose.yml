@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD: ${DB_PASS}
+      - POSTGRES_USER: ${DB_USER}
+      - POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./pgdata
+    ports:
+      - "5432:5432"
+  auth:
+    build: .
+    ports:
+      - "4999:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST: ${DB_HOST}
+      - DB_PORT: 5432
+      - DB_USER: ${DB_USER}
+      - DB_PASS: ${DB_PASS}
+      - DB_NAME: ${DB_NAME}
+      - SERVER_ID: ${SERVER_ID}
+      - NODE_ENV: ${NODE_ENV}
+      - SERVER_URL: ${SERVER_URL}
+      - PORT: ${PORT}
+      - JWT_SECRET: ${JWT_SECRET}
+      - REFRESH_NAME: ${REFRESH_NAME}
+      - ACCESS_NAME: ${ACCESS_NAME}
