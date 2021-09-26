@@ -1,4 +1,4 @@
-import { User } from "entity/User";
+import { User } from "../entity/User";
 import { Session } from "../entity/Session";
 import { sign } from "jsonwebtoken";
 

@@ -2,7 +2,7 @@ import { User } from "./../entity/User";
 import { Mutation, Query, Resolver, Arg, Ctx, UseMiddleware } from "type-graphql";
 import * as argon2 from "argon2";
 import { randomBytes } from "crypto";
-import { ExpressContext } from "types/ExpressContext";
+import { ExpressContext } from "../types/ExpressContext";
 import { createAccessToken, createRefreshToken } from "./../utilities/createToken";
 import { isAuth } from "../middleware/isAuth";
 import { Session } from "./../entity/Session";
