@@ -18,6 +18,7 @@ import { MyField } from "components/Forms";
 import { useState } from "react";
 import { useLoginMutation } from "generated/graphql";
 import { RouteComponentProps } from "react-router";
+import { ApolloError } from "apollo-client";
 
 export const Login: React.FC<RouteComponentProps> = (props) => {
   return (
@@ -62,8 +63,8 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
           .then(() => {
             history.push("/dashboard");
           })
-          .catch((err) => {
-            setFromError(err.message);
+          .catch((err: ApolloError) => {
+            setFromError(err.networkError ? "Timed out." : err.message);
           });
 
         setSubmitting(false);
