@@ -1,3 +1,5 @@
+const SOURCE_PATH = process.env.NODE_ENV === "local" ? "src" : "dist";
+
 module.exports = {
   type: "postgres",
   host: process.env.DB_HOST,
@@ -7,12 +9,12 @@ module.exports = {
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: ["src/entity/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"],
+  entities: [`${SOURCE_PATH}/entity/**/*`],
+  migrations: [`${SOURCE_PATH}/migration/**/*`],
+  subscribers: [`${SOURCE_PATH}/subscriber/**/*`],
   cli: {
-    entitiesDir: "src/entity",
-    migrationsDir: "src/migration",
-    subscribersDir: "src/subscriber",
+    entitiesDir: `${SOURCE_PATH}/entity`,
+    migrationsDir: `${SOURCE_PATH}/migration`,
+    subscribersDir: `${SOURCE_PATH}/subscriber`,
   },
 };
