@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     env_file:
-      - database.env
+      - env/database.env
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     ports:
@@ -16,4 +16,4 @@ services:
     depends_on:
       - db
     env_file:
-      - docker.env
+      - env/docker.env

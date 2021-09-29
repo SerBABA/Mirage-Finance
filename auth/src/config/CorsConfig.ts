@@ -12,8 +12,6 @@ export function corsConfig(): e.CorsOptions {
     origins = [`${process.env.SERVER_URL!}:${process.env.WEB_PORT!}`];
   }
 
-  console.log(origins);
-
   return {
     origin: origins,
     credentials: true,
