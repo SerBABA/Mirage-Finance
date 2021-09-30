@@ -1,7 +1,7 @@
 import { AuthenticationError } from "apollo-server-errors";
 import { verify } from "jsonwebtoken";
 import { MiddlewareFn } from "type-graphql";
-import { ExpressContext } from "types/ExpressContext";
+import { ExpressContext } from "../types/ExpressContext";
 
 // "SERVER_ID token"
 

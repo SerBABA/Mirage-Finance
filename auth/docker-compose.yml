@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    env_file:
+      - env/database.env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "6666:5432"
+  auth:
+    image: serbaba/auth:1.0
+    build: .
+    ports:
+      - "2999:2999"
+    depends_on:
+      - db
+    env_file:
+      - env/docker.env

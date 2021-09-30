@@ -6,18 +6,17 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TestimonialsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
   padding: 4rem 0;
   margin: 0 auto;
   max-width: ${screenSizes.large}px;
+`;
 
-  @media (min-width: ${screenSizes.mediumLarge}px) {
-    grid-template-rows: unset;
-    grid-template-columns: repeat(auto-fit, minmax(${screenSizes.small}px, 1fr));
-  }
+export const SpacingWrapper = styled.div`
+  margin: 0 auto;
 `;
 
 export const Wrapper = styled.div`
@@ -26,9 +25,10 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   width: 60%;
-  height: 80%;
   padding: 2rem 2rem;
-  margin: 2rem auto;
+  margin: 2rem 0.5rem;
+  height: 100%;
+  max-height: 30rem;
 
   background-color: #ffffff;
   box-shadow: 0.35rem 0.55rem 0.75rem #00000015;
@@ -41,7 +41,8 @@ export const Wrapper = styled.div`
   }
 
   @media (min-width: ${screenSizes.medium}px) {
-    margin: 2rem auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 `;
 

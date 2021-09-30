@@ -119,14 +119,16 @@ type TestimonialProps = {
  */
 const Testimonial = (props: TestimonialProps) => {
   return (
-    <Tes.Wrapper>
-      <Tes.Image src={props.src} />
-      <Tes.Text>
-        <Tes.TextTitle>{props.title}</Tes.TextTitle>
-        {props.job ? <Tes.TextJob>{props.job}</Tes.TextJob> : null}
-        {props.children}
-      </Tes.Text>
-      {props.date ? <Tes.TextDate>{props.date}</Tes.TextDate> : null}
-    </Tes.Wrapper>
+    <Tes.SpacingWrapper>
+      <Tes.Wrapper>
+        <Tes.Image src={props.src} />
+        <Tes.Text>
+          <Tes.TextTitle>{props.title}</Tes.TextTitle>
+          {props.job ? <Tes.TextJob>{props.job}</Tes.TextJob> : null}
+          {props.children}
+        </Tes.Text>
+        {props.date ? <Tes.TextDate>{props.date}</Tes.TextDate> : null}
+      </Tes.Wrapper>
+    </Tes.SpacingWrapper>
   );
 };
