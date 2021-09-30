@@ -19,7 +19,7 @@ RUN npm install --production
 COPY --from=builder /app/dist ./dist
 
 COPY ormconfig.js /app/ormconfig.js
-COPY ./docker.env /app/.env
+COPY ./env/docker.env /app/.env
 
 EXPOSE 2999
 CMD ["npm", "run", "start"]
