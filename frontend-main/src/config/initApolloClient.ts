@@ -25,7 +25,7 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
           return axios
             .post(process.env.REACT_APP_REFRESH_TOKEN_URL!, {}, { withCredentials: true })
             .then(() => forward(operation))
-            .catch((err) => err);
+            .catch(() => {});
         }
       }
     });

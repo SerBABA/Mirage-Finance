@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import screenSize from "config/screen";
+import { Link } from "react-router-dom";
 
 export const TopNav = styled.nav`
   position: fixed;
@@ -43,18 +44,29 @@ export const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   background-color: white;
+  color: black;
+  border: 1px #69828c solid;
+  transition: border ease-in-out 150ms;
 
   margin: 0 0.5rem;
 
   height: 35px;
   width: 35px;
+
   border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px #dfdfdf solid;
+  }
 `;
 
 export const Icon = styled.img`
-  background-color: white;
   height: 35px;
   width: 35px;
   border-radius: 50%;
 `;
+
+export const LinkIconWrapper = styled(Link)``;

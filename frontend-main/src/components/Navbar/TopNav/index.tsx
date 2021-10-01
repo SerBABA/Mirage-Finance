@@ -1,9 +1,16 @@
-import { LeftWrapper, RightWrapper, TopNav, Logo, IconWrapper, Icon } from "./topNav.elements";
+import {
+  LeftWrapper,
+  RightWrapper,
+  TopNav,
+  Logo,
+  IconWrapper,
+  Icon,
+  LinkIconWrapper,
+} from "./topNav.elements";
 import { Twirl as Humburger } from "hamburger-react";
 import DefaultUserImage from "assets/default-user.png";
 import LogOutSVG from "assets/icons/LogOutSVG";
 import { useLogoutMutation } from "generated/graphql";
-import { Link } from "react-router-dom";
 
 type TopNavComponentProps = {
   toggleSideNavbar: () => void;
@@ -41,11 +48,11 @@ const SignOutIcon: React.FC = () => {
   };
 
   return (
-    <Link to="/login" onClick={handleLogout}>
+    <LinkIconWrapper to="/login" onClick={handleLogout}>
       <IconWrapper>
         <LogOutSVG />
       </IconWrapper>
-    </Link>
+    </LinkIconWrapper>
   );
 };
 
