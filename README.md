@@ -8,6 +8,6 @@
 
 ### Todos:
 
-- [x] Setup Apollo links s.t. refresh tokens are automatically handled without user noticing.
-- [x] Add Docker container for auth service (currently just to allow for PostgreSQL to be packaged along).
-- [ ] Add dashboard file, which will contain a simple chart (for now) of spending per category.
+- [ ] Add error handling for different error types (GraphQL errors).
+- [ ] Get feedback regarding colour scheme.
+- [ ] Add to the dashboard a simple chart (for now) of spending per category.
