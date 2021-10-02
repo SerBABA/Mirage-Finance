@@ -38,7 +38,7 @@ export type MutationRegisterArgs = {
 export type Query = {
   __typename?: 'Query';
   bye: Scalars['String'];
-  hello: Scalars['String'];
+  isLoggedIn: Scalars['Boolean'];
   users: Array<User>;
 };
 
@@ -50,10 +50,10 @@ export type User = {
   username: Scalars['String'];
 };
 
-export type HelloQueryVariables = Exact<{ [key: string]: never; }>;
+export type IsLoggedInQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HelloQuery = { __typename?: 'Query', hello: string };
+export type IsLoggedInQuery = { __typename?: 'Query', isLoggedIn: boolean };
 
 export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
@@ -84,38 +84,38 @@ export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string }> };
 
 
-export const HelloDocument = gql`
-    query Hello {
-  hello
+export const IsLoggedInDocument = gql`
+    query IsLoggedIn {
+  isLoggedIn
 }
     `;
 
 /**
- * __useHelloQuery__
+ * __useIsLoggedInQuery__
  *
- * To run a query within a React component, call `useHelloQuery` and pass it any options that fit your needs.
- * When your component renders, `useHelloQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useIsLoggedInQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsLoggedInQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useHelloQuery({
+ * const { data, loading, error } = useIsLoggedInQuery({
  *   variables: {
  *   },
  * });
  */
-export function useHelloQuery(baseOptions?: Apollo.QueryHookOptions<HelloQuery, HelloQueryVariables>) {
+export function useIsLoggedInQuery(baseOptions?: Apollo.QueryHookOptions<IsLoggedInQuery, IsLoggedInQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
+        return Apollo.useQuery<IsLoggedInQuery, IsLoggedInQueryVariables>(IsLoggedInDocument, options);
       }
-export function useHelloLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HelloQuery, HelloQueryVariables>) {
+export function useIsLoggedInLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsLoggedInQuery, IsLoggedInQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
+          return Apollo.useLazyQuery<IsLoggedInQuery, IsLoggedInQueryVariables>(IsLoggedInDocument, options);
         }
-export type HelloQueryHookResult = ReturnType<typeof useHelloQuery>;
-export type HelloLazyQueryHookResult = ReturnType<typeof useHelloLazyQuery>;
-export type HelloQueryResult = Apollo.QueryResult<HelloQuery, HelloQueryVariables>;
+export type IsLoggedInQueryHookResult = ReturnType<typeof useIsLoggedInQuery>;
+export type IsLoggedInLazyQueryHookResult = ReturnType<typeof useIsLoggedInLazyQuery>;
+export type IsLoggedInQueryResult = Apollo.QueryResult<IsLoggedInQuery, IsLoggedInQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($password: String!, $username: String!) {
   login(password: $password, username: $username)

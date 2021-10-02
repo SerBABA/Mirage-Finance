@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import DataTable from "./DataTable";
-
 import LandingPage from "views/landing";
 import { Login } from "views/login/index";
 import { Register } from "views/register/index";
 import Dashboard from "views/dashboard";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function MainRouter() {
   return (
@@ -16,7 +15,7 @@ export default function MainRouter() {
 
         <Route path="/register" component={Register} />
 
-        <Route path="/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
       </Switch>
     </Router>
   );

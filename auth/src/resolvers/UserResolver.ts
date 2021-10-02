@@ -19,9 +19,10 @@ import { Session } from "./../entity/Session";
  */
 @Resolver()
 export class UserResolver {
-  @Query(() => String)
-  hello() {
-    return "hello world!";
+  @Query(() => Boolean)
+  @UseMiddleware(isAuth)
+  isLoggedIn() {
+    return true;
   }
 
   // User[] is equivalent to [User]
