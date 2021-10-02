@@ -44,7 +44,9 @@ const SignOutIcon: React.FC = () => {
   const [logout] = useLogoutMutation();
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await logout();
+    } catch {}
   };
 
   return (
