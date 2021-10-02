@@ -1,6 +1,5 @@
 import { Formik, Form } from "formik";
 import {
-  Bar,
   PageWrapper,
   Title,
   LoginWrapper,
@@ -23,14 +22,12 @@ import { ApolloError } from "apollo-client";
 export const Login: React.FC<RouteComponentProps> = (props) => {
   return (
     <>
-      <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
         <LoginWrapper>
           <LoginForm {...props} />
         </LoginWrapper>
       </PageWrapper>
-      <Bar />
     </>
   );
 };

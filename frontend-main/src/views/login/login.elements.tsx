@@ -1,20 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const BarThinkness: number = 8;
-
-export const Bar = styled.div`
-  height: ${BarThinkness}vh;
-  width: 100%;
-  background-color: #141b1f;
-`;
-
 export const PageWrapper = styled.main`
   background-color: #dfdfdf;
   height: 100%;
   width: 100%;
   min-width: 100vw;
-  min-height: ${100 - 2 * BarThinkness}vh;
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;

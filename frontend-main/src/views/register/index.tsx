@@ -1,6 +1,5 @@
 import { Formik, Form } from "formik";
 import {
-  Bar,
   PageWrapper,
   Title,
   RegisterWrapper,
@@ -22,14 +21,12 @@ import { FormError } from "components/Forms/forms.elements";
 export const Register: React.FC<RouteComponentProps> = (props) => {
   return (
     <>
-      <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
         <RegisterWrapper>
           <RegisterForm {...props} />
         </RegisterWrapper>
       </PageWrapper>
-      <Bar />
     </>
   );
 };
