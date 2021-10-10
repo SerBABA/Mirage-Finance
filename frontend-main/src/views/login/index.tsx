@@ -58,7 +58,7 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
           },
         })
           .then(() => {
-            history.push("/dashboard");
+            history.push("/dashboard/home");
           })
           .catch((err: ApolloError) => {
             setFromError(err.networkError ? "Timed out." : err.message);

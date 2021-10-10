@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import screenSize from "config/screen";
 
@@ -42,7 +42,7 @@ export const NavLinks = styled.ul`
   width: 100%;
 `;
 
-export const NavLinkWrapper = styled(Link)`
+export const NavLinkWrapper = styled(NavLink)`
   text-decoration: none;
   height: 100%;
   width: 100%;

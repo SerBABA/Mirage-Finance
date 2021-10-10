@@ -15,9 +15,9 @@ const Navbar: React.FC = () => {
       <TopNavComponent toggleSideNavbar={toggleSideNavbar} showSideNavbar={showNavbar} />
       <ContentWrapper open={showNavbar}>
         <NavLinks>
-          <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard" />
-          <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard" />
-          <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard" />
+          <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard/home" />
+          <NavbarLink name="Projection" icon={<HomeSVG />} to="/dashboard/projection" />
+          <NavbarLink name="Other" icon={<HomeSVG />} to="/dashboard/other" />
         </NavLinks>
       </ContentWrapper>
     </>
@@ -36,7 +36,7 @@ type NavbarLinkProps = {
  */
 const NavbarLink: React.FC<NavbarLinkProps> = ({ name, icon, to }) => {
   return (
-    <NavLinkWrapper to={to}>
+    <NavLinkWrapper to={to} activeStyle={{ backgroundColor: "white", color: "#141b1f" }}>
       <IconWrapper>{icon}</IconWrapper>
       <LinkName>{name}</LinkName>
     </NavLinkWrapper>
