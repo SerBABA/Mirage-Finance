@@ -104,6 +104,7 @@ export const Submit = styled.button`
 export const RegisterWrap = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0.5em 0;
@@ -114,7 +115,7 @@ export const RegisterLink = styled(Link)`
   text-decoration: none;
   color: #141b1f;
   border-bottom: 1px transparent solid;
-
+  margin-bottom: 0.2em;
   transition: all 150ms ease-in-out;
 
   &:hover {

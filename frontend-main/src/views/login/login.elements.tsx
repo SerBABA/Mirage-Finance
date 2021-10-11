@@ -101,20 +101,21 @@ export const Submit = styled.button`
   }
 `;
 
-export const RegisterWrap = styled.div`
+export const LinksWrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0.5em 0;
   margin: 1.5em 0 auto;
 `;
 
-export const Register = styled(Link)`
+export const OtherLink = styled(Link)`
   text-decoration: none;
   color: #141b1f;
   border-bottom: 1px transparent solid;
-
+  margin-bottom: 0.2em;
   transition: all 150ms ease-in-out;
 
   &:hover {

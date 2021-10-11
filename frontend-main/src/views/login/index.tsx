@@ -9,8 +9,8 @@ import {
   Submit,
   ShowPassword,
   PasswordWrap,
-  Register,
-  RegisterWrap,
+  OtherLink,
+  LinksWrapper,
 } from "./login.elements";
 import { FormError } from "components/Forms/forms.elements";
 import { MyField } from "components/Forms";
@@ -97,9 +97,10 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
             <Submit type="submit" disabled={isSubmitting}>
               LOGIN
             </Submit>
-            <RegisterWrap>
-              <Register to="/register">Create Account</Register>
-            </RegisterWrap>
+            <LinksWrapper>
+              <OtherLink to="/register">Create Account</OtherLink>
+              <OtherLink to="/">Cancel</OtherLink>
+            </LinksWrapper>
           </Form>
         </FormWrapper>
       )}

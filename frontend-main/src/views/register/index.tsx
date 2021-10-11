@@ -120,6 +120,7 @@ const RegisterForm: React.FC<RouteComponentProps> = ({ history }) => {
             </Submit>
             <RegisterWrap>
               <RegisterLink to="/login">Have an account?</RegisterLink>
+              <RegisterLink to="/">Cancel</RegisterLink>
             </RegisterWrap>
           </Form>
         </FormWrapper>
