@@ -33,7 +33,7 @@ export default function Navbar() {
         <Na.Navbar>
           <Na.Logo>Mirage Finance</Na.Logo>
           <Na.Links>
-            <Na.LiLink to="/register">Register</Na.LiLink>
+            <Na.LiLink to="/login">Login</Na.LiLink>
           </Na.Links>
         </Na.Navbar>
       </Na.NavbarWrapper>
