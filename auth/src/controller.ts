@@ -5,7 +5,7 @@ import { TokenExpiredError, verify } from "jsonwebtoken";
 
 export const handleRefreshTokens = async (req: Request, res: Response) => {
   const refresh_token: string | undefined = req.cookies[process.env.REFRESH_NAME!];
-  const access_cookie: string | undefined = req.cookies[process.env.ACCESS_NAME!];
+  const access_cookie: string | undefined = req.body?.accessToken;
 
   // Check if the session token exists.
   if (!refresh_token) {
@@ -18,17 +18,17 @@ export const handleRefreshTokens = async (req: Request, res: Response) => {
     return res.status(401).send({ ok: false });
   }
 
-  const access_token = access_cookie.split(" ")[1];
+  const accessToken = access_cookie.split(" ")[1];
 
   // Check if the access token exists
-  if (!access_token) {
+  if (!accessToken) {
     console.error("No access token provided by user.");
     return res.status(401).send({ ok: false });
   }
 
   // Check that the access token is valid but expired.
   try {
-    verify(access_token, process.env.JWT_SECRET!);
+    verify(accessToken, process.env.JWT_SECRET!);
 
     // if it makes it past this section it is still valid.
     console.error("Access token is still valid.");
@@ -51,10 +51,5 @@ export const handleRefreshTokens = async (req: Request, res: Response) => {
     return res.status(403).send({ ok: false });
   }
 
-  res.cookie(process.env.ACCESS_NAME!, createAccessToken(session.user), {
-    sameSite: "none",
-    secure: true,
-  });
-
-  return res.status(200).send({ ok: true });
+  return res.status(200).send({ ok: true, accessToken: createAccessToken(session.user) });
 };

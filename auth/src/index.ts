@@ -12,6 +12,7 @@ import cors from "cors";
 (async () => {
   const app = express();
   app.use(cookieParser());
+  app.use(express.json());
   app.use(cors(corsConfig()));
 
   app.get("/", (_req, res) => res.send("Hello world"));

@@ -1,8 +1,10 @@
 import { ApolloClient, InMemoryCache, from } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { onError } from "@apollo/client/link/error";
 import { RetryLink } from "@apollo/client/link/retry";
+import { setContext } from "@apollo/client/link/context";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 /**
  * The terminating link that performs the call to the graphql server.
@@ -12,50 +14,53 @@ const httpLink = new BatchHttpLink({
   credentials: "include",
 });
 
-/**
- * On an error we perform a check for if we got an UNAUTHENTICATED code. This would mean that we are going to try and perform a
- * refresh token action incase it was the issue.
- */
-const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+const authLink = setContext(async (_operation, { headers }) => {
+  const accessToken = await getNewToken().catch(() => "");
+
+  const authHeader = accessToken
+    ? accessToken
+    : Cookies.get(process.env.REACT_APP_ACCESS_TOKEN_NAME!);
+
+  const newHeaders = {
+    headers: {
+      ...headers,
+      authorization: `${authHeader}`,
+    },
+  };
+
+  return newHeaders;
+});
+
+const getNewToken: () => Promise<string> = async () => {
+  const response = await axios.post(
+    process.env.REACT_APP_REFRESH_TOKEN_URL!,
+    { accessToken: Cookies.get(process.env.REACT_APP_ACCESS_TOKEN_NAME!) },
+    { withCredentials: true }
+  );
+  const { accessToken } = response.data;
+  Cookies.set(process.env.REACT_APP_ACCESS_TOKEN_NAME!, accessToken ? accessToken : "");
+  return accessToken ? accessToken : "";
+};
+
+const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors)
     graphQLErrors.forEach((err) => {
       if (err.extensions && err.extensions.code === "UNAUTHENTICATED") {
-        if (!operation.getContext().requesting_refresh_token) {
-          operation.setContext({ requesting_refresh_token: true });
-          return axios
-            .post(process.env.REACT_APP_REFRESH_TOKEN_URL!, {}, { withCredentials: true })
-            .then(() => forward(operation))
-            .catch(() => {});
-        }
       }
     });
 });
 
-/**
- * Tries to contact the server up to 3 times. Otherwise fails.
- */
 const retryLink = new RetryLink({
-  delay: {
-    max: Infinity,
-    initial: 100,
-    jitter: true,
-  },
   attempts: {
-    max: 3,
     retryIf: (error, _operation) => {
       return !!error;
     },
   },
 });
 
-/**
- * Initiates the ApolloClient. This includes the links and cache definition.
- *
- * @returns The initiated apolloclient.
- */
 export function initApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: from([retryLink, errorLink, httpLink]),
+    link: from([retryLink, errorLink, authLink, httpLink]),
   });
 }

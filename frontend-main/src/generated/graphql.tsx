@@ -14,10 +14,16 @@ export type Scalars = {
   Float: number;
 };
 
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  accessToken: Scalars['String'];
+  ok: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   Logout: Scalars['Boolean'];
-  login: Scalars['Boolean'];
+  login: LoginResponse;
   register: Scalars['Boolean'];
 };
 
@@ -61,7 +67,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: boolean };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, ok: boolean } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -118,7 +124,10 @@ export type IsLoggedInLazyQueryHookResult = ReturnType<typeof useIsLoggedInLazyQ
 export type IsLoggedInQueryResult = Apollo.QueryResult<IsLoggedInQuery, IsLoggedInQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($password: String!, $username: String!) {
-  login(password: $password, username: $username)
+  login(password: $password, username: $username) {
+    accessToken
+    ok
+  }
 }
     `;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;

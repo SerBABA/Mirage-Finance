@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useLoginMutation } from "generated/graphql";
 import { RouteComponentProps } from "react-router";
 import { ApolloError } from "apollo-client";
+import Cookies from "js-cookie";
 
 export const Login: React.FC<RouteComponentProps> = (props) => {
   return (
@@ -57,8 +58,11 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
             password: data.password,
           },
         })
-          .then(() => {
-            history.push("/dashboard/home");
+          .then((res) => {
+            if (res.data && res.data.login.ok) {
+              Cookies.set(process.env.REACT_APP_ACCESS_TOKEN_NAME!, res.data.login.accessToken);
+              history.push("/dashboard/home");
+            }
           })
           .catch((err: ApolloError) => {
             setFromError(err.networkError ? "Timed out." : err.message);

@@ -3,10 +3,12 @@ import { verify } from "jsonwebtoken";
 import { MiddlewareFn } from "type-graphql";
 import { ExpressContext } from "../types/ExpressContext";
 
+// Token format
 // "SERVER_ID token"
 
 export const isAuth: MiddlewareFn<ExpressContext> = ({ context }, next) => {
-  const accessToken: string = context.req.cookies[process.env.ACCESS_NAME!];
+  const accessToken: string | undefined = context.req.headers.authorization;
+  console.log(accessToken);
 
   if (!accessToken) {
     throw new AuthenticationError("Missing access token or invalid.");
@@ -17,7 +19,7 @@ export const isAuth: MiddlewareFn<ExpressContext> = ({ context }, next) => {
     const payload = verify(token, process.env.JWT_SECRET!);
     context.payload = payload as any;
   } catch (error) {
-    console.log(error);
+    console.log("EXPIRED");
     throw new AuthenticationError("Missing access token or invalid.");
   }
 
