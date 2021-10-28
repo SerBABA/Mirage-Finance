@@ -9,6 +9,12 @@ type PerformFetchResponse = {
   unreadResponse: Response;
 };
 
+/**
+ * Performs the actual fetch call.
+ * @param input Request info.
+ * @param init Request init info if defined.
+ * @returns {PerformFetchResponse} A response object with a readable response and a unreadable response.
+ */
 const performFetch = async (
   input: RequestInfo,
   init: RequestInit | undefined
@@ -19,6 +25,12 @@ const performFetch = async (
   return { readableResponse: json, unreadResponse };
 };
 
+/**
+ * Performs the refreshing of tokens when required and returns the solutions.
+ * @param input input of the fetch
+ * @param init init for fetch
+ * @returns {Promise<Response>} The response of the last request that succeeds.
+ */
 const customFetch = async (input: RequestInfo, init?: any | undefined): Promise<Response> => {
   try {
     const firstRequest = await performFetch(input, init);
@@ -55,7 +67,7 @@ const customFetch = async (input: RequestInfo, init?: any | undefined): Promise<
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_GRAPHQL_SERVER_URL!,
   credentials: "include",
-  fetch: customFetch,
+  fetch: customFetch, // For the customFetch implementation to work, we must use HttpLink. Otherwise it will queue all the requests at once.
 });
 
 const authLink = setContext(async (_operation, { headers }) => {
@@ -67,17 +79,26 @@ const authLink = setContext(async (_operation, { headers }) => {
   };
 });
 
-const getNewToken: () => Promise<string> = async () => {
+/**
+ * Performs a request to get a new refresh token from the server
+ * @returns {Promise<string>}the access token string.
+ */
+const getNewToken = async (): Promise<string> => {
   const response = await axios.post(
     process.env.REACT_APP_REFRESH_TOKEN_URL!,
     { accessToken: Cookies.get(process.env.REACT_APP_ACCESS_TOKEN_NAME!) },
     { withCredentials: true }
   );
+
   const { accessToken } = response.data;
   Cookies.set(process.env.REACT_APP_ACCESS_TOKEN_NAME!, accessToken ? accessToken : "");
+
   return accessToken ? accessToken : "";
 };
 
+/**
+ * On network errors, the retry link will attempt (up to 3 times) to create contact.
+ */
 const retryLink = new RetryLink({
   attempts: {
     retryIf: (error, _operation) => {
@@ -86,6 +107,11 @@ const retryLink = new RetryLink({
   },
 });
 
+/**
+ * Initiates the ApolloClient. This includes the links and cache definition.
+ *
+ * @returns The initiated apolloclient.
+ */
 export function initApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(),
