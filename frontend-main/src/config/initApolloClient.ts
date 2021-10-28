@@ -1,34 +1,70 @@
-import { ApolloClient, InMemoryCache, from } from "@apollo/client";
-import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import { onError } from "@apollo/client/link/error";
+import { ApolloClient, InMemoryCache, from, HttpLink } from "@apollo/client";
 import { RetryLink } from "@apollo/client/link/retry";
 import { setContext } from "@apollo/client/link/context";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+type PerformFetchResponse = {
+  readableResponse: any;
+  unreadResponse: Response;
+};
+
+const performFetch = async (
+  input: RequestInfo,
+  init: RequestInit | undefined
+): Promise<PerformFetchResponse> => {
+  const readableResponse = await fetch(input, init);
+  const unreadResponse = readableResponse.clone();
+  const json = await readableResponse.json();
+  return { readableResponse: json, unreadResponse };
+};
+
+const customFetch = async (input: RequestInfo, init?: any | undefined): Promise<Response> => {
+  try {
+    const firstRequest = await performFetch(input, init);
+    let refetch = false;
+
+    if (firstRequest.readableResponse.errors) {
+      await firstRequest.readableResponse.errors.forEach((err: any) => {
+        if (err.extensions && err.extensions.code === "UNAUTHENTICATED") {
+          refetch = true;
+        }
+      });
+    }
+
+    if (refetch) {
+      const accessToken = await getNewToken();
+
+      if (accessToken && init && init.headers) {
+        init.headers.authorization = accessToken;
+        const secondRequest = await performFetch(input, init);
+        return secondRequest.readableResponse;
+      }
+    }
+
+    return firstRequest.unreadResponse;
+  } catch (err) {
+    console.log(err);
+  }
+  return (await performFetch(input, init)).unreadResponse;
+};
+
 /**
  * The terminating link that performs the call to the graphql server.
  */
-const httpLink = new BatchHttpLink({
+const httpLink = new HttpLink({
   uri: process.env.REACT_APP_GRAPHQL_SERVER_URL!,
   credentials: "include",
+  fetch: customFetch,
 });
 
 const authLink = setContext(async (_operation, { headers }) => {
-  const accessToken = await getNewToken().catch(() => "");
-
-  const authHeader = accessToken
-    ? accessToken
-    : Cookies.get(process.env.REACT_APP_ACCESS_TOKEN_NAME!);
-
-  const newHeaders = {
+  return {
     headers: {
       ...headers,
-      authorization: `${authHeader}`,
+      authorization: `${Cookies.get(process.env.REACT_APP_ACCESS_TOKEN_NAME!)}`,
     },
   };
-
-  return newHeaders;
 });
 
 const getNewToken: () => Promise<string> = async () => {
@@ -42,14 +78,6 @@ const getNewToken: () => Promise<string> = async () => {
   return accessToken ? accessToken : "";
 };
 
-const errorLink = onError(({ graphQLErrors }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach((err) => {
-      if (err.extensions && err.extensions.code === "UNAUTHENTICATED") {
-      }
-    });
-});
-
 const retryLink = new RetryLink({
   attempts: {
     retryIf: (error, _operation) => {
@@ -61,6 +89,6 @@ const retryLink = new RetryLink({
 export function initApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: from([retryLink, errorLink, authLink, httpLink]),
+    link: from([retryLink, authLink, httpLink]),
   });
 }
