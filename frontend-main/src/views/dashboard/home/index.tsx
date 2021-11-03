@@ -1,13 +1,20 @@
 import React from "react";
-import Navbar from "components/Navbar";
+import Layout, { GridLayout } from "components/Layout";
 import SpendingChart from "components/spendingChart";
+import DashboardItem from "components/DashboardItem";
 
 export const Dashboard: React.FC = () => {
   return (
-    <div style={{ backgroundColor: "#dfdfdf", minHeight: "100vh", width: "100%", height: "100%" }}>
-      <Navbar></Navbar>
-      <SpendingChart />
-    </div>
+    <Layout>
+      <GridLayout>
+        <DashboardItem gridRow="1 / 2" gridCol="1 / 2">
+          First Item
+        </DashboardItem>
+        <DashboardItem gridRow="2 / 3" gridCol="1 / 2">
+          <SpendingChart />
+        </DashboardItem>
+      </GridLayout>
+    </Layout>
   );
 };
 
