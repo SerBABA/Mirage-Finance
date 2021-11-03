@@ -17,16 +17,20 @@ export const TestimonialsWrapper = styled.div`
 
 export const SpacingWrapper = styled.div`
   margin: 0 auto;
+
+  @media (max-width: 647px) {
+    height: 100%;
+  }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 60%;
   padding: 2rem 2rem;
-  margin: 2rem 0.5rem;
+  margin: 0.4rem auto;
   height: 100%;
   max-height: 30rem;
 
