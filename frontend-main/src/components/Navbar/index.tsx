@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { ContentWrapper, IconWrapper, LinkName, NavLinks, NavLinkWrapper } from "./navbar.elements";
+import {
+  ContentWrapper,
+  IconWrapper,
+  LinkName,
+  NavLinks,
+  NavLinkWrapper,
+} from "./navbar.elements";
 import HomeSVG from "assets/icons/HomeSVG";
 import TopNavComponent from "./TopNav";
+import { useMatch, useResolvedPath } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -12,11 +19,18 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <TopNavComponent toggleSideNavbar={toggleSideNavbar} showSideNavbar={showNavbar} />
+      <TopNavComponent
+        toggleSideNavbar={toggleSideNavbar}
+        showSideNavbar={showNavbar}
+      />
       <ContentWrapper open={showNavbar}>
         <NavLinks>
           <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard/home" />
-          <NavbarLink name="Projection" icon={<HomeSVG />} to="/dashboard/projection" />
+          <NavbarLink
+            name="Projection"
+            icon={<HomeSVG />}
+            to="/dashboard/projection"
+          />
           <NavbarLink name="Other" icon={<HomeSVG />} to="/dashboard/other" />
         </NavLinks>
       </ContentWrapper>
@@ -35,8 +49,14 @@ type NavbarLinkProps = {
  * @param props Contains the name of the link and the to link string.
  */
 const NavbarLink: React.FC<NavbarLinkProps> = ({ name, icon, to }) => {
+  const resolved = useResolvedPath(to);
+  const match = useMatch({ path: resolved.pathname, end: true });
+
   return (
-    <NavLinkWrapper to={to} activeStyle={{ backgroundColor: "white", color: "#141b1f" }}>
+    <NavLinkWrapper
+      to={to}
+      style={match ? { backgroundColor: "white", color: "#141b1f" } : {}}
+    >
       <IconWrapper>{icon}</IconWrapper>
       <LinkName>{name}</LinkName>
     </NavLinkWrapper>

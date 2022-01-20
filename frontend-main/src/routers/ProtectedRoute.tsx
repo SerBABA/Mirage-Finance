@@ -1,4 +1,4 @@
-import { Redirect, Route, RouteProps } from "react-router";
+import { Navigate, Route, RouteProps } from "react-router";
 import { useIsLoggedInQuery } from "generated/graphql";
 import { useEffect, useState } from "react";
 import Loading from "views/loading";
@@ -30,7 +30,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (isAuthenticated) {
     return <Route {...route} />;
   } else {
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" />;
   }
 };
 

@@ -1,4 +1,4 @@
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import {
   PageWrapper,
   Title,
@@ -15,28 +15,57 @@ import {
 import { FormError } from "components/Forms/forms.elements";
 import { MyField } from "components/Forms";
 import { useState } from "react";
-import { useLoginMutation } from "generated/graphql";
-import { RouteComponentProps } from "react-router";
+import { LoginMutationVariables, useLoginMutation } from "generated/graphql";
 import { ApolloError } from "apollo-client";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-export const Login: React.FC<RouteComponentProps> = (props) => {
+export const Login = () => {
   return (
     <>
       <PageWrapper>
         <Title>Mirage Finance</Title>
         <LoginWrapper>
-          <LoginForm {...props} />
+          <LoginForm />
         </LoginWrapper>
       </PageWrapper>
     </>
   );
 };
 
-const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFromError] = useState("");
   const [login] = useLoginMutation();
+  const navigate = useNavigate();
+
+  const doLogin = async (
+    data: LoginMutationVariables,
+    { setSubmitting }: FormikHelpers<LoginMutationVariables>
+  ) => {
+    setSubmitting(true);
+
+    await login({
+      variables: {
+        username: data.username,
+        password: data.password,
+      },
+    })
+      .then((res) => {
+        if (res.data && res.data.login.ok) {
+          Cookies.set(
+            process.env.REACT_APP_ACCESS_TOKEN_NAME!,
+            res.data.login.accessToken
+          );
+          navigate("/dashboard");
+        }
+      })
+      .catch((err: ApolloError) => {
+        setFromError(err.networkError ? "Timed out." : err.message);
+      });
+
+    setSubmitting(false);
+  };
 
   return (
     <Formik
@@ -49,34 +78,18 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
 
         return errors;
       }}
-      onSubmit={async (data, { setSubmitting }) => {
-        setSubmitting(true);
-
-        await login({
-          variables: {
-            username: data.username,
-            password: data.password,
-          },
-        })
-          .then((res) => {
-            if (res.data && res.data.login.ok) {
-              Cookies.set(process.env.REACT_APP_ACCESS_TOKEN_NAME!, res.data.login.accessToken);
-              history.push("/dashboard/home");
-            }
-          })
-          .catch((err: ApolloError) => {
-            setFromError(err.networkError ? "Timed out." : err.message);
-          });
-
-        setSubmitting(false);
-      }}
+      onSubmit={doLogin}
     >
       {({ isSubmitting }) => (
         <FormWrapper>
           <Form>
             <InputWrap>
               <Label>USERNAME</Label>
-              <MyField type="input" placeholder="user@example.com" name="username" />
+              <MyField
+                type="input"
+                placeholder="user@example.com"
+                name="username"
+              />
             </InputWrap>
 
             <InputWrap>
