@@ -16,17 +16,17 @@ import {
 import { MyField } from "components/Forms";
 import React, { useState } from "react";
 import { useRegisterMutation } from "generated/graphql";
-import { RouteComponentProps } from "react-router";
 import { FormError } from "components/Forms/forms.elements";
+import { useNavigate } from "react-router-dom";
 
-export const Register: React.FC<RouteComponentProps> = (props) => {
+export const Register = () => {
   return (
     <>
       <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
         <RegisterWrapper>
-          <RegisterForm {...props} />
+          <RegisterForm />
         </RegisterWrapper>
       </PageWrapper>
       <Bar />
@@ -47,15 +47,18 @@ const validateRegisterFields = (values: {
   if (values.firstName.length <= 0) errors.firstName = "Required field";
   if (values.lastName.length <= 0) errors.lastName = "Required field";
   if (values.password.length <= 0) errors.password = "Required field";
-  if (values.confirmPassword !== values.password) errors.confirmPassword = "Password must match";
-  if (values.confirmPassword.length <= 0) errors.confirmPassword = "Required field";
+  if (values.confirmPassword !== values.password)
+    errors.confirmPassword = "Password must match";
+  if (values.confirmPassword.length <= 0)
+    errors.confirmPassword = "Required field";
 
   return errors;
 };
 
-const RegisterForm: React.FC<RouteComponentProps> = ({ history }) => {
+const RegisterForm = () => {
   const [register] = useRegisterMutation();
   const [formError, setFromError] = useState("");
+  const navigate = useNavigate();
 
   return (
     <Formik
@@ -79,7 +82,7 @@ const RegisterForm: React.FC<RouteComponentProps> = ({ history }) => {
           },
         })
           .then(() => {
-            history.push("/login");
+            navigate("/login");
           })
           .catch((err) => {
             setFromError(err.message);
@@ -93,7 +96,11 @@ const RegisterForm: React.FC<RouteComponentProps> = ({ history }) => {
           <Form>
             <InputWrap>
               <Label>USERNAME</Label>
-              <MyField type="input" placeholder="user@example.com" name="username" />
+              <MyField
+                type="input"
+                placeholder="user@example.com"
+                name="username"
+              />
             </InputWrap>
 
             <InputWrap>
@@ -148,7 +155,9 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ name }) => {
           name={name}
         />
       </div>
-      <ShowPassword onClick={() => setShow(!show)}>{show ? "HIDE" : "SHOW"}</ShowPassword>
+      <ShowPassword onClick={() => setShow(!show)}>
+        {show ? "HIDE" : "SHOW"}
+      </ShowPassword>
     </PasswordWrap>
   );
 };

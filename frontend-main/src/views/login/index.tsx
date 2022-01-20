@@ -17,16 +17,16 @@ import { FormError } from "components/Forms/forms.elements";
 import { MyField } from "components/Forms";
 import { useState } from "react";
 import { useLoginMutation } from "generated/graphql";
-import { RouteComponentProps } from "react-router";
+import { useNavigate } from "react-router-dom";
 
-export const Login: React.FC<RouteComponentProps> = (props) => {
+export const Login = () => {
   return (
     <>
       <Bar />
       <PageWrapper>
         <Title>Mirage Finance</Title>
         <LoginWrapper>
-          <LoginForm {...props} />
+          <LoginForm />
         </LoginWrapper>
       </PageWrapper>
       <Bar />
@@ -34,10 +34,11 @@ export const Login: React.FC<RouteComponentProps> = (props) => {
   );
 };
 
-const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFromError] = useState("");
   const [login] = useLoginMutation();
+  const navigate = useNavigate();
 
   return (
     <Formik
@@ -60,7 +61,7 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
           },
         })
           .then(() => {
-            history.push("/dashboard");
+            navigate("/dashboard");
           })
           .catch((err) => {
             setFromError(err.message);
@@ -74,7 +75,11 @@ const LoginForm: React.FC<RouteComponentProps> = ({ history }) => {
           <Form>
             <InputWrap>
               <Label>USERNAME</Label>
-              <MyField type="input" placeholder="user@example.com" name="username" />
+              <MyField
+                type="input"
+                placeholder="user@example.com"
+                name="username"
+              />
             </InputWrap>
 
             <InputWrap>
