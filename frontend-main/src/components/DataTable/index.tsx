@@ -1,9 +1,9 @@
-import React from "react";
-import useMultipleSad, { singleSad } from "../../hooks/useMultileSad";
-import parseCSV from "../../services/parseSadMones";
-import StyledDataTable, { StyledCell, StyledRow } from "./DataTable";
+import React from 'react';
+import { singleSad, useMultipleSad } from '../../hooks/useMultileSad';
+import { parseCSV } from '../../services/parseSadMones';
+import { StyledDataTable, StyledCell, StyledRow } from './DataTable.elements';
 
-export default function DataTable() {
+export const DataTable = () => {
   const { data, updateData } = useMultipleSad([]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,18 +34,20 @@ export default function DataTable() {
       </StyledDataTable>
     </>
   );
-}
+};
 
-function DataRow(props: { data: singleSad; index: number }) {
+type DataRowProps = { data: singleSad; index: number };
+
+const DataRow = ({ data }: DataRowProps) => {
   return (
     <StyledRow numVals={7}>
-      <StyledCell>{props.data.paymentType}</StyledCell>
-      <StyledCell>{props.data.details}</StyledCell>
-      <StyledCell>{props.data.particulars || "N/A"}</StyledCell>
-      <StyledCell>{props.data.code || "N/A"}</StyledCell>
-      <StyledCell>{props.data.reference || "N/A"}</StyledCell>
-      <StyledCell>{props.data.amount}</StyledCell>
-      <StyledCell>{props.data.date.toUTCString()}</StyledCell>
+      <StyledCell>{data.paymentType}</StyledCell>
+      <StyledCell>{data.details}</StyledCell>
+      <StyledCell>{data.particulars || 'N/A'}</StyledCell>
+      <StyledCell>{data.code || 'N/A'}</StyledCell>
+      <StyledCell>{data.reference || 'N/A'}</StyledCell>
+      <StyledCell>{data.amount}</StyledCell>
+      <StyledCell>{data.date.toUTCString()}</StyledCell>
     </StyledRow>
   );
-}
+};

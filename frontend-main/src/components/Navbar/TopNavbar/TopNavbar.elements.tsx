@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import screenSize from "config/screen";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { SCREEN_SIZES } from 'config/constants';
+import { Link } from 'react-router-dom';
 
 export const TopNav = styled.nav`
   position: fixed;
@@ -26,13 +26,13 @@ export const Logo = styled.div`
 
   padding-left: 0.1rem;
 
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.5rem;
   font-weight: 300;
 
   color: white;
 
-  @media (min-width: ${screenSize.medium}px) {
+  @media (min-width: ${SCREEN_SIZES.medium}px) {
     display: flex;
   }
 `;

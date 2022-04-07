@@ -1,9 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-type WrapperProps = {
-  gridRow: string;
-  gridCol: string;
-};
+export type WrapperProps = { gridRow: string; gridCol: string };
+
 export const Wrapper = styled.div<WrapperProps>`
   grid-row: ${(props) => `${props.gridRow}`};
   grid-column: ${(props) => `${props.gridCol}`};

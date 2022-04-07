@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-// import screenSizes from "config/screen";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const NavbarWrapper = styled.div`
   height: 5rem;
@@ -21,11 +20,9 @@ export const Navbar = styled.nav`
   align-items: center;
 `;
 
-export const LinksWrapper = styled.div``;
-
 export const Logo = styled.div`
   font-size: 32px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   color: white;
 `;
@@ -40,7 +37,7 @@ export const Links = styled.ul`
   flex-direction: column;
 `;
 
-export const LiLink = styled(Link)`
+export const ListLink = styled(Link)`
   color: white;
   text-decoration: none;
   padding: 1em 0.75em;
@@ -50,18 +47,18 @@ export const LiLink = styled(Link)`
   }
 `;
 
-interface GoTopInter {
+interface GoToTopWrapperProps {
   show: boolean;
 }
 
-export const GoTop = styled.div<GoTopInter>`
+export const GoToTopWrapper = styled.div<GoToTopWrapperProps>`
   position: fixed;
   width: 30px;
   height: 30px;
   bottom: 1.5rem;
   color: white;
   right: 1.5rem;
-  display: ${(props) => (props.show ? "" : "none")};
+  display: ${(props) => (props.show ? '' : 'none')};
 
   background-color: #00000040;
   cursor: pointer;

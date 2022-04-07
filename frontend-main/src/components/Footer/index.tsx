@@ -1,5 +1,3 @@
-import * as El from "./footer.elements";
+import { Footer as FooterElement } from './footer.elements';
 
-export default function Footer() {
-  return <El.Footer>2021 &#169; Mirage Finance</El.Footer>;
-}
+export const Footer = () => <FooterElement>2021 &#169; Mirage Finance</FooterElement>;

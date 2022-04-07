@@ -1,66 +1,24 @@
-import React, { useState } from "react";
-import {
-  ContentWrapper,
-  IconWrapper,
-  LinkName,
-  NavLinks,
-  NavLinkWrapper,
-} from "./navbar.elements";
-import HomeSVG from "assets/icons/HomeSVG";
-import TopNavComponent from "./TopNav";
-import { useMatch, useResolvedPath } from "react-router-dom";
+import React, { useState } from 'react';
+import { ContentWrapper, NavLinks } from './Navbar.elements';
+import { NavLink } from './NavLink';
+import { HouseIcon } from 'assets/icons/HouseIcon';
+import { TopNavbar } from './TopNavbar';
 
-const Navbar: React.FC = () => {
-  const [showNavbar, setShowNavbar] = useState(false);
+export const Navbar: React.FC = () => {
+  const [show, setShow] = useState(false);
 
-  const toggleSideNavbar = () => {
-    setShowNavbar(!showNavbar);
-  };
+  const toggleNav = () => setShow(!show);
 
   return (
     <>
-      <TopNavComponent
-        toggleSideNavbar={toggleSideNavbar}
-        showSideNavbar={showNavbar}
-      />
-      <ContentWrapper open={showNavbar}>
+      <TopNavbar onToggle={toggleNav} show={show} />
+      <ContentWrapper open={show}>
         <NavLinks>
-          <NavbarLink name="Home" icon={<HomeSVG />} to="/dashboard/home" />
-          <NavbarLink
-            name="Projection"
-            icon={<HomeSVG />}
-            to="/dashboard/projection"
-          />
-          <NavbarLink name="Other" icon={<HomeSVG />} to="/dashboard/other" />
+          <NavLink name="Home" icon={<HouseIcon size={30} />} to="/dashboard/home" />
+          <NavLink name="Projection" icon={<HouseIcon size={30} />} to="/dashboard/projection" />
+          <NavLink name="Other" icon={<HouseIcon size={30} />} to="/dashboard/other" />
         </NavLinks>
       </ContentWrapper>
     </>
   );
 };
-
-type NavbarLinkProps = {
-  name: string;
-  to: string;
-  icon: JSX.Element;
-};
-
-/**
- * A side navbar link component, which contains the name and the to link.
- * @param props Contains the name of the link and the to link string.
- */
-const NavbarLink: React.FC<NavbarLinkProps> = ({ name, icon, to }) => {
-  const resolved = useResolvedPath(to);
-  const match = useMatch({ path: resolved.pathname, end: true });
-
-  return (
-    <NavLinkWrapper
-      to={to}
-      style={match ? { backgroundColor: "white", color: "#141b1f" } : {}}
-    >
-      <IconWrapper>{icon}</IconWrapper>
-      <LinkName>{name}</LinkName>
-    </NavLinkWrapper>
-  );
-};
-
-export default Navbar;

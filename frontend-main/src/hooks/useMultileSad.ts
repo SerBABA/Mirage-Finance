@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export type singleSad = {
   paymentType: string;
@@ -12,15 +12,15 @@ export type singleSad = {
 };
 
 export enum Category {
-  living = "living",
-  rent = "rent",
-  treats = "treats",
-  flat = "flat",
-  fuel = "fuel",
-  other = "other",
+  living = 'living',
+  rent = 'rent',
+  treats = 'treats',
+  flat = 'flat',
+  fuel = 'fuel',
+  other = 'other',
 }
 
-export default function useMultipleSad(rows: singleSad[]) {
+export const useMultipleSad = (rows: singleSad[]) => {
   const [data, setData] = useState(rows);
 
   const updateData = (data: singleSad[]) => {
@@ -28,37 +28,37 @@ export default function useMultipleSad(rows: singleSad[]) {
   };
 
   return { data, updateData };
-}
+};
 
 export const sampleData: singleSad[] = [
   {
-    paymentType: "debit",
-    details: "dets",
+    paymentType: 'debit',
+    details: 'dets',
     amount: 23,
     date: new Date(),
     category: Category.living,
   },
   {
-    paymentType: "debit",
-    details: "dets",
+    paymentType: 'debit',
+    details: 'dets',
     amount: 23,
     date: new Date(),
     category: Category.living,
   },
   {
-    paymentType: "debit",
-    details: "dets",
+    paymentType: 'debit',
+    details: 'dets',
     amount: 23,
     date: new Date(),
     category: Category.living,
   },
-  { paymentType: "debit", details: "dets", amount: 23, date: new Date(), category: Category.rent },
+  { paymentType: 'debit', details: 'dets', amount: 23, date: new Date(), category: Category.rent },
   {
-    paymentType: "debit",
-    details: "dets",
+    paymentType: 'debit',
+    details: 'dets',
     amount: 23,
     date: new Date(),
     category: Category.living,
   },
-  { paymentType: "debit", details: "dets", amount: 23, date: new Date(), category: Category.other },
+  { paymentType: 'debit', details: 'dets', amount: 23, date: new Date(), category: Category.other },
 ];

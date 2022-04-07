@@ -1,16 +1,16 @@
-import { singleSad } from "../hooks/useMultileSad";
+import { singleSad } from '../hooks/useMultileSad';
 
 async function bankStringToDate(dateString: string): Promise<Date> {
-  const elements = dateString.split("/");
+  const elements = dateString.split('/');
   return new Date(`${elements[2]}-${elements[1]}-${elements[0]}`);
 }
 
-export default async function parseCSV(raw: string): Promise<singleSad[]> {
-  const lines: string[] = raw.split("\n");
+export const parseCSV = async (raw: string): Promise<singleSad[]> => {
+  const lines: string[] = raw.split('\n');
   const entries: singleSad[] = [];
 
   for (let i = 1; i + 1 < lines.length; i++) {
-    const rowCols: string[] = lines[i].split(",");
+    const rowCols: string[] = lines[i].split(',');
     const tmp: singleSad = {
       paymentType: rowCols[0],
       details: rowCols[1],
@@ -24,4 +24,4 @@ export default async function parseCSV(raw: string): Promise<singleSad[]> {
   }
 
   return entries;
-}
+};

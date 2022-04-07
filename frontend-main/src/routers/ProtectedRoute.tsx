@@ -1,19 +1,16 @@
-import { Navigate, Route, RouteProps } from "react-router";
-import { useIsLoggedInQuery } from "generated/graphql";
-import { useEffect, useState } from "react";
-import Loading from "views/loading";
+import { Navigate, Route, RouteProps } from 'react-router';
+import { useIsLoggedInQuery } from 'generated/graphql';
+import { useEffect, useState } from 'react';
+import { Loading } from 'components/loading';
 
 type ProtectedRouteProps = {
   redirect?: string;
 } & RouteProps;
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  redirect = "/login",
-  ...route
-}) => {
+export const ProtectedRoute = ({ redirect = '/login', ...route }: ProtectedRouteProps) => {
   const { loading, data, error } = useIsLoggedInQuery({
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only',
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -33,5 +30,3 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/login" />;
   }
 };
-
-export default ProtectedRoute;

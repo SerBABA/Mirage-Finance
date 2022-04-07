@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import screenSizes from "config/screen";
+import styled from 'styled-components';
+import { SCREEN_SIZES } from 'config/constants';
 
 export const Wrapper = styled.div`
   background-color: #efefef;
@@ -12,16 +12,7 @@ export const ChildrenWrapper = styled.div`
   padding-top: 50px;
   transition: margin-left ease-in-out 300ms;
 
-  @media (min-width: ${screenSizes.medium}px) {
+  @media (min-width: ${SCREEN_SIZES.medium}px) {
     margin-left: 50px;
   }
-`;
-
-export const GridWrapper = styled.div`
-  display: grid;
-  margin: 1.25rem auto;
-  grid-template-columns: 1fr;
-
-  grid-row-gap: 0.4rem;
-  margin: 0.5rem 0.8rem;
 `;

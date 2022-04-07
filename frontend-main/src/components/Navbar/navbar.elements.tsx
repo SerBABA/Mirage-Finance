@@ -1,6 +1,5 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import screenSize from "config/screen";
+import styled from 'styled-components';
+import { SCREEN_SIZES } from 'config/constants';
 
 interface WrapperProps {
   open: boolean;
@@ -8,7 +7,7 @@ interface WrapperProps {
 
 export const ContentWrapper = styled.div<WrapperProps>`
   top: 50px;
-  width: ${(props) => (props.open ? "250px" : "0")};
+  width: ${(props) => (props.open ? '250px' : '0')};
   transition: width ease-in-out 300ms;
 
   min-height: 100vh;
@@ -24,8 +23,8 @@ export const ContentWrapper = styled.div<WrapperProps>`
   justify-content: start;
   align-items: flex-start;
 
-  @media (min-width: ${screenSize.medium}px) {
-    width: ${(props) => (props.open ? "250px" : "50px")};
+  @media (min-width: ${SCREEN_SIZES.medium}px) {
+    width: ${(props) => (props.open ? '250px' : '50px')};
   }
 `;
 
@@ -40,39 +39,4 @@ export const NavLinks = styled.ul`
   align-items: flex-start;
 
   width: 100%;
-`;
-
-export const NavLinkWrapper = styled(NavLink)`
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
-
-  color: white;
-  background-color: transparent;
-  transition: all ease-in-out 150ms;
-
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    background-color: white;
-    color: #141b1f;
-  }
-`;
-
-export const IconWrapper = styled.div`
-  height: 50px;
-  max-width: 48px;
-
-  display: flex;
-  justify-content: left;
-  align-items: center;
-
-  padding: 0 10px;
-`;
-
-export const LinkName = styled.div`
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
 `;

@@ -1,19 +1,5 @@
-import styled from "styled-components";
-import screenSizes from "config/screen";
-
-export const ContentWrapper = styled.div`
-  background-color: #dfdfdf;
-`;
-
-export const TestimonialsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  padding: 4rem 0;
-  margin: 0 auto;
-  max-width: ${screenSizes.large}px;
-`;
+import styled from 'styled-components';
+import { SCREEN_SIZES } from 'config/constants';
 
 export const SpacingWrapper = styled.div`
   margin: 0 auto;
@@ -44,7 +30,7 @@ export const Wrapper = styled.div`
     transform: translateY(1%);
   }
 
-  @media (min-width: ${screenSizes.medium}px) {
+  @media (min-width: ${SCREEN_SIZES.medium}px) {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
@@ -63,14 +49,14 @@ export const Text = styled.div`
 `;
 
 export const TextTitle = styled.h4`
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   margin: 0;
   font-size: 1.5rem;
 `;
 
 export const TextJob = styled.h6`
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 1.1rem;
   margin: 0;
@@ -78,14 +64,10 @@ export const TextJob = styled.h6`
 `;
 
 export const TextDate = styled.div`
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-style: italic;
   font-size: 0.75rem;
 
   margin-left: auto;
-`;
-
-export const CenterItem = styled.div`
-  height: 100%;
 `;

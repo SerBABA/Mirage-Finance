@@ -1,10 +1,8 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import ChartWrapper from "./DistributionChart";
+import { Bar } from 'react-chartjs-2';
 
-import { sampleData, Category, singleSad } from "../../hooks/useMultileSad";
+import { sampleData, Category, singleSad } from '../../hooks/useMultileSad';
 
-export default function DistrbutionChart() {
+export const DistrbutionChart = () => {
   const categories: string[] = Object.values(Category);
   const data: number[] = [];
 
@@ -20,18 +18,18 @@ export default function DistrbutionChart() {
   }
 
   return (
-    <ChartWrapper>
+    <div>
       <Bar
         data={{
           labels: categories,
           datasets: [
             {
-              label: "Values",
+              label: 'Values',
               data,
             },
           ],
         }}
       />
-    </ChartWrapper>
+    </div>
   );
-}
+};
